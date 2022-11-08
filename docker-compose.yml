@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  bdd:
+    image: postgres:12.3
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+  api:
+    build: .
+    environment:
+      - PGUSER=postgres
+      - PGHOST=database
+      - PGPASSWORD=postgres
+      - PGDATABASE=postgres
+      - PGPORT=5432
+    ports:
+      - "3000:3000"
+    links:
+      - "bdd:database"
